@@ -163,4 +163,23 @@ public class CalculatorTest {
 
         assertThat(unit.display(), is("0"));
     }
+
+    /*
+        This was *really* interesting! The original name for the the test was pressingPlusThenEqualsStillShowsEnteredValue().
+        I expected the display to show "4", and expected this test to pass. It didn't, it showed "8". I debugged, and
+        found that this was because when I pressed equals, it took the content of the display as being the second
+        operand, and because pressing plus doesn't immediately clear the display, it was still "4",
+        so it did 4 + 4. This got me thinking about what the behaviour ought to be.  I tried it on the Mac Calculator.app,
+        and it shows exactly the same behaviour.  Pressing 4, +, = gives an answer of 8
+     */
+    @Test
+    public void pressingPlusThenEqualsUsesTheDisplayValueAsTheSecondOperand() {
+        Calculator unit = new Calculator();
+
+        unit.press("4");
+        unit.press("+");
+        unit.press("=");
+
+        assertThat(unit.display(), is("8"));
+    }
 }
