@@ -10,28 +10,33 @@ public class Calculator {
 
     public void press(String s) {
         if(s.equals("C")) {
-            this.display = "";
-        } else if(s.equals("+")) {
-            this.operand1 = this.display;
-            resetDisplay = true;
-            this.latestOperator = s;
-        } else if(s.equals("-")) {
-            this.operand1 = this.display;
-            resetDisplay = true;
-            this.latestOperator = s;
+            reset();
+        } else if(s.equals("+") || s.equals("-")) {
+            processOperator(s);
         } else if(s.equals("=")) {
             this.operand2 = this.display;
-            this.display = processOperands(latestOperator);
+            this.display = processEquals(latestOperator);
         } else {
             if(resetDisplay) {
-                this.display = "";
-                this.resetDisplay = false;
+                reset();
             }
             this.display += s;
         }
     }
 
-    private String processOperands(String operator) {
+    private void reset() {
+        this.display = "";
+        this.resetDisplay = false;
+    }
+
+    private void processOperator(String s) {
+        this.operand1 = this.display;
+        resetDisplay = true;
+        this.latestOperator = s;
+    }
+
+    /* I renamed this from processOperands() to something more direct */
+    private String processEquals(String operator) {
         int op1 = Integer.valueOf(this.operand1);
         int op2 = Integer.valueOf(this.operand2);
         int result = (operator.equals("+")) ? op1 + op2 : op1 - op2;
