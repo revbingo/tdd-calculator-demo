@@ -182,4 +182,27 @@ public class CalculatorTest {
 
         assertThat(unit.display(), is("8"));
     }
+
+    /*
+        Having discovered the above in Calculator.app, it made me wonder "what happens if I press equals again"??.
+        Totally unexpectedly, my code, without any changes, behaves the same way.  The first operator is repeatedly
+        applied to the first operator
+     */
+    @Test
+    public void pressingEqualsMultipleTimesAppliesTheLastOperatorToTheLastOperand() {
+        Calculator unit = new Calculator();
+
+        unit.press("4");
+        unit.press("+");
+        assertThat(unit.display(), is("4"));
+
+        unit.press("=");
+        assertThat(unit.display(), is("8"));
+
+        unit.press("=");
+        assertThat(unit.display(), is("12"));
+
+        unit.press("=");
+        assertThat(unit.display(), is("16"));
+    }
 }
