@@ -5,6 +5,7 @@ public class Calculator {
     String display = "";
     private String operand1;
     private String operand2;
+    private String latestOperator;
     private boolean resetDisplay = false;
 
     public void press(String s) {
@@ -13,9 +14,14 @@ public class Calculator {
         } else if(s.equals("+")) {
             this.operand1 = this.display;
             resetDisplay = true;
+            this.latestOperator = s;
+        } else if(s.equals("-")) {
+            this.operand1 = this.display;
+            resetDisplay = true;
+            this.latestOperator = s;
         } else if(s.equals("=")) {
             this.operand2 = this.display;
-            this.display = addOperands();
+            this.display = processOperands(latestOperator);
         } else {
             if(resetDisplay) {
                 this.display = "";
@@ -25,10 +31,11 @@ public class Calculator {
         }
     }
 
-    private String addOperands() {
+    private String processOperands(String operator) {
         int op1 = Integer.valueOf(this.operand1);
         int op2 = Integer.valueOf(this.operand2);
-        return String.valueOf(op1 + op2);
+        int result = (operator.equals("+")) ? op1 + op2 : op1 - op2;
+        return String.valueOf(result);
     }
 
     public String display() {

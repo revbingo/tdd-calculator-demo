@@ -68,10 +68,10 @@ public class CalculatorTest {
         assertThat(unit.display(), is("7"));
     }
 
-
     /*
         Because the test above worked, I expected this to work without any changes to the code. Instead, it printed
-        out "37".  This was because I didn't set the resetDisplay flag back to false.  An easy mistake to make.
+        out "37".  This was because I didn't set the resetDisplay flag back to false.  An easy mistake to make, and
+        a good job I wrote this test
      */
     @Test
     public void addingTwoDigitNumbersWorksAsExpected() {
@@ -87,4 +87,20 @@ public class CalculatorTest {
         assertThat(unit.display(), is("77"));
     }
 
+    /*
+        This test also failed after I had implemented the functionality. This turned out to be because I had cut and
+        pasted the test and forgot to change the operator.  Sometimes, failures are because the test is buggy,
+        not the production code!
+     */
+    @Test
+    public void useTheMinusButtonToSubtractNumbers() {
+        Calculator unit = new Calculator();
+
+        unit.press("4");
+        unit.press("-");
+        unit.press("3");
+        unit.press("=");
+
+        assertThat(unit.display(), is("1"));
+    }
 }
