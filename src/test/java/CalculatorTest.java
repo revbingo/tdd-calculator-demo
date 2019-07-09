@@ -103,4 +103,64 @@ public class CalculatorTest {
 
         assertThat(unit.display(), is("1"));
     }
+
+    /*
+        This and tests below it do not force me to add any new code, they just verify that the implementation
+        I've written cover these cases.  We write these tests because we cannot be sure that every implementation
+        in the future will also cover these cases. Also be sure to deliberately make these tests fail e.g. by
+        changing the production code, or by changing the expected values, to be sure that the test does actually
+        fail if the code or the test is incorrect.
+     */
+    @Test
+    public void nothingHappensUntilIPressEquals() {
+        Calculator unit = new Calculator();
+
+        unit.press("4");
+        unit.press("+");
+        unit.press("3");
+        unit.press("1");
+
+        assertThat(unit.display(), is("31"));
+
+        unit.press("=");
+        assertThat(unit.display(), is("35"));
+    }
+
+    @Test
+    public void addingZeroWorksAsExpected() {
+        Calculator unit = new Calculator();
+
+        unit.press("4");
+        unit.press("+");
+        unit.press("0");
+        unit.press("=");
+
+        assertThat(unit.display(), is("4"));
+    }
+
+    @Test
+    public void pressingPlusTwiceStillAddsTheNumbers() {
+        Calculator unit = new Calculator();
+
+        unit.press("4");
+        unit.press("+");
+        unit.press("+");
+        unit.press("4");
+        unit.press("=");
+
+        assertThat(unit.display(), is("8"));
+    }
+
+    @Test
+    public void pressingMinusTwiceStillAddsTheNumbers() {
+        Calculator unit = new Calculator();
+
+        unit.press("4");
+        unit.press("-");
+        unit.press("-");
+        unit.press("4");
+        unit.press("=");
+
+        assertThat(unit.display(), is("0"));
+    }
 }
