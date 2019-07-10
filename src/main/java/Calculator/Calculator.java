@@ -3,6 +3,7 @@ package Calculator;
 public class Calculator {
 
     private String display = "";
+    private int accumulator = 0;
     private int operand1 = 0;
     private int operand2 = 0;
     private String latestOperator;
@@ -15,7 +16,8 @@ public class Calculator {
             processOperator(s);
         } else if(s.equals("=")) {
             this.operand2 = Integer.valueOf(this.display);
-            this.display = String.valueOf(processEquals(latestOperator));
+            this.accumulator = accumulate(latestOperator);
+            this.display = String.valueOf(this.accumulator);
         } else {
             if(resetDisplay) {
                 reset();
@@ -38,7 +40,7 @@ public class Calculator {
         this.latestOperator = s;
     }
 
-    private int processEquals(String operator) {
+    private int accumulate(String operator) {
         return (operator.equals("+")) ? this.operand1 + this.operand2 : this.operand1 - this.operand2;
     }
 
