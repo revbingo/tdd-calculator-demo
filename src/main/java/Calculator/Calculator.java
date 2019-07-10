@@ -3,8 +3,8 @@ package Calculator;
 public class Calculator {
 
     private String display = "";
-    private String operand1;
-    private String operand2;
+    private int operand1 = 0;
+    private int operand2 = 0;
     private String latestOperator;
     private boolean resetDisplay = false;
 
@@ -14,8 +14,8 @@ public class Calculator {
         } else if(s.equals("+") || s.equals("-")) {
             processOperator(s);
         } else if(s.equals("=")) {
-            this.operand2 = this.display;
-            this.display = processEquals(latestOperator);
+            this.operand2 = Integer.valueOf(this.display);
+            this.display = String.valueOf(processEquals(latestOperator));
         } else {
             if(resetDisplay) {
                 reset();
@@ -30,16 +30,16 @@ public class Calculator {
     }
 
     private void processOperator(String s) {
-        this.operand1 = this.display;
+        if(!"".equals(this.display)) {
+            this.operand1 = Integer.valueOf(this.display);
+        }
+
         resetDisplay = true;
         this.latestOperator = s;
     }
 
-    private String processEquals(String operator) {
-        int op1 = Integer.valueOf(this.operand1);
-        int op2 = Integer.valueOf(this.operand2);
-        int result = (operator.equals("+")) ? op1 + op2 : op1 - op2;
-        return String.valueOf(result);
+    private int processEquals(String operator) {
+        return (operator.equals("+")) ? this.operand1 + this.operand2 : this.operand1 - this.operand2;
     }
 
     public String display() {
