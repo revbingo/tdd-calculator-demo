@@ -173,7 +173,7 @@ public class CalculatorTest {
         and it shows exactly the same behaviour.  Pressing 4, +, = gives an answer of 8
      */
     @Test
-    public void pressingPlusThenEqualsUsesTheDisplayValueAsTheSecondOperand() {
+    public void pressingPlusThenEqualsImpliesSecondOperandSameAsTheFirst() {
         Calculator unit = new Calculator();
 
         unit.press("4");
@@ -204,5 +204,15 @@ public class CalculatorTest {
 
         unit.press("=");
         assertThat(unit.display(), is("16"));
+    }
+
+    @Test
+    public void pressingPlusFirstImpliesZeroForFirstOperand() {
+        Calculator unit = new Calculator();
+
+        unit.press("+");
+        unit.press("4");
+        assertThat(unit.display(), is("4"));
+
     }
 }

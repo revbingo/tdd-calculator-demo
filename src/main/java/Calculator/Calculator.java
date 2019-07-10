@@ -2,7 +2,7 @@ package Calculator;
 
 public class Calculator {
 
-    String display = "";
+    private String display = "";
     private String operand1;
     private String operand2;
     private String latestOperator;
@@ -35,7 +35,6 @@ public class Calculator {
         this.latestOperator = s;
     }
 
-    /* I renamed this from processOperands() to something more direct */
     private String processEquals(String operator) {
         int op1 = Integer.valueOf(this.operand1);
         int op2 = Integer.valueOf(this.operand2);
