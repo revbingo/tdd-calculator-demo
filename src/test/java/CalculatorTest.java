@@ -153,7 +153,7 @@ public class CalculatorTest {
     }
 
     @Test
-    public void pressingMinusTwiceStillAddsTheNumbers() {
+    public void pressingMinusTwiceStillSubtractsTheNumbers() {
         Calculator unit = new Calculator();
 
         unit.press("4");
@@ -223,7 +223,6 @@ public class CalculatorTest {
         that refactoring, implementing the code for this feature should be trivial.
      */
     @Test
-    @Ignore
     public void canAddMultipleNumbers() {
         Calculator unit = new Calculator();
 

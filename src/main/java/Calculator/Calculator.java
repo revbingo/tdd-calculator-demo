@@ -3,45 +3,47 @@ package Calculator;
 public class Calculator {
 
     private String display = "";
+    private String currentNumber = "";
     private int accumulator = 0;
-    private int operand1 = 0;
-    private int operand2 = 0;
+//    private int latestOperand = 0;
     private String latestOperator;
     private boolean resetDisplay = false;
+    private boolean expectingOperand = true;
 
     public void press(String s) {
         if(s.equals("C")) {
             reset();
         } else if(s.equals("+") || s.equals("-")) {
-            processOperator(s);
+            if(!"".equals(this.currentNumber) && !this.expectingOperand) {
+                this.accumulator = accumulate(latestOperator);
+            }
+
+            resetDisplay = true;
+            this.latestOperator = s;
+            this.expectingOperand = true;
         } else if(s.equals("=")) {
-            this.operand2 = Integer.valueOf(this.display);
             this.accumulator = accumulate(latestOperator);
             this.display = String.valueOf(this.accumulator);
         } else {
             if(resetDisplay) {
                 reset();
             }
-            this.display += s;
+            this.currentNumber += s;
+            this.expectingOperand = false;
+            this.display = this.currentNumber;
         }
     }
 
     private void reset() {
         this.display = "";
+        this.currentNumber = "";
         this.resetDisplay = false;
     }
 
-    private void processOperator(String s) {
-        if(!"".equals(this.display)) {
-            this.operand1 = Integer.valueOf(this.display);
-        }
-
-        resetDisplay = true;
-        this.latestOperator = s;
-    }
-
     private int accumulate(String operator) {
-        return (operator.equals("+")) ? this.operand1 + this.operand2 : this.operand1 - this.operand2;
+        int latestOperand = Integer.valueOf((this.currentNumber.equals("") ? "0" : this.currentNumber));
+        if(operator == null) return latestOperand;
+        return (operator.equals("+")) ? this.accumulator + latestOperand : this.accumulator - latestOperand;
     }
 
     public String display() {
