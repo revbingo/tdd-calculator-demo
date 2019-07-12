@@ -9,7 +9,7 @@ public class Calculator {
     private boolean resetDisplay = false;
     private boolean expectingOperand = true;
 
-    public void press(String s) {
+    public Calculator press(String s) {
         if(s.equals("C")) {
             reset();
         } else if(s.equals("+") || s.equals("-")) {
@@ -32,6 +32,7 @@ public class Calculator {
             this.expectingOperand = false;
             this.display = this.currentNumber;
         }
+        return this;
     }
 
     private void reset() {

@@ -1,5 +1,4 @@
 import Calculator.Calculator;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -20,9 +19,7 @@ public class CalculatorTest {
     public void pressingMultipleNumbersDisplaysAllOfThemAsOneNumber() {
         Calculator unit = new Calculator();
 
-        unit.press("3");
-        unit.press("4");
-        unit.press("5");
+        unit.press("3").press("4").press("5");
 
         assertThat(unit.display(), is("345"));
     }
@@ -61,10 +58,7 @@ public class CalculatorTest {
     public void useThePlusButtonToAddTwoNumbersTogether() {
         Calculator unit = new Calculator();
 
-        unit.press("3");
-        unit.press("+");
-        unit.press("4");
-        unit.press("=");
+        unit.press("3").press("+").press("4").press("=");
 
         assertThat(unit.display(), is("7"));
     }
@@ -78,12 +72,7 @@ public class CalculatorTest {
     public void addingTwoDigitNumbersWorksAsExpected() {
         Calculator unit = new Calculator();
 
-        unit.press("3");
-        unit.press("3");
-        unit.press("+");
-        unit.press("4");
-        unit.press("4");
-        unit.press("=");
+        unit.press("3").press("3").press("+").press("4").press("4").press("=");
 
         assertThat(unit.display(), is("77"));
     }
@@ -97,10 +86,7 @@ public class CalculatorTest {
     public void useTheMinusButtonToSubtractNumbers() {
         Calculator unit = new Calculator();
 
-        unit.press("4");
-        unit.press("-");
-        unit.press("3");
-        unit.press("=");
+        unit.press("4").press("-").press("3").press("=");
 
         assertThat(unit.display(), is("1"));
     }
@@ -116,10 +102,7 @@ public class CalculatorTest {
     public void nothingHappensUntilIPressEquals() {
         Calculator unit = new Calculator();
 
-        unit.press("4");
-        unit.press("+");
-        unit.press("3");
-        unit.press("1");
+        unit.press("4").press("+").press("3").press("1");
 
         assertThat(unit.display(), is("31"));
 
@@ -131,10 +114,7 @@ public class CalculatorTest {
     public void addingZeroWorksAsExpected() {
         Calculator unit = new Calculator();
 
-        unit.press("4");
-        unit.press("+");
-        unit.press("0");
-        unit.press("=");
+        unit.press("4").press("+").press("0").press("=");
 
         assertThat(unit.display(), is("4"));
     }
@@ -143,11 +123,7 @@ public class CalculatorTest {
     public void pressingPlusTwiceStillAddsTheNumbers() {
         Calculator unit = new Calculator();
 
-        unit.press("4");
-        unit.press("+");
-        unit.press("+");
-        unit.press("4");
-        unit.press("=");
+        unit.press("4").press("+").press("+").press("4").press("=");
 
         assertThat(unit.display(), is("8"));
     }
@@ -156,11 +132,7 @@ public class CalculatorTest {
     public void pressingMinusTwiceStillSubtractsTheNumbers() {
         Calculator unit = new Calculator();
 
-        unit.press("4");
-        unit.press("-");
-        unit.press("-");
-        unit.press("4");
-        unit.press("=");
+        unit.press("4").press("-").press("-").press("4").press("=");
 
         assertThat(unit.display(), is("0"));
     }
@@ -177,9 +149,7 @@ public class CalculatorTest {
     public void pressingPlusThenEqualsImpliesSecondOperandSameAsTheFirst() {
         Calculator unit = new Calculator();
 
-        unit.press("4");
-        unit.press("+");
-        unit.press("=");
+        unit.press("4").press("+").press("=");
 
         assertThat(unit.display(), is("8"));
     }
@@ -193,8 +163,7 @@ public class CalculatorTest {
     public void pressingEqualsMultipleTimesAppliesTheLastOperatorToTheLastOperand() {
         Calculator unit = new Calculator();
 
-        unit.press("4");
-        unit.press("+");
+        unit.press("4").press("+");
         assertThat(unit.display(), is("4"));
 
         unit.press("=");
@@ -211,8 +180,7 @@ public class CalculatorTest {
     public void pressingPlusFirstImpliesZeroForFirstOperand() {
         Calculator unit = new Calculator();
 
-        unit.press("+");
-        unit.press("4");
+        unit.press("+").press("4");
         assertThat(unit.display(), is("4"));
     }
 
@@ -226,13 +194,16 @@ public class CalculatorTest {
     public void canAddMultipleNumbers() {
         Calculator unit = new Calculator();
 
-        unit.press("4");
-        unit.press("+");
-        unit.press("5");
-        unit.press("+");
-        unit.press("6");
-        unit.press("=");
+        unit.press("4").press("+").press("5").press("+").press("6").press("=");
         assertThat(unit.display(), is("15"));
     }
 
+    @Test
+    public void mixedOperandsGivesTheCorrectAnswer() {
+        Calculator unit = new Calculator();
+
+        unit.press("4").press("+").press("5").press("-").press("6").press("=");
+
+        assertThat(unit.display(), is("3"));
+    }
 }
