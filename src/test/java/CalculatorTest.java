@@ -234,4 +234,5 @@ public class CalculatorTest {
         unit.press("=");
         assertThat(unit.display(), is("15"));
     }
+
 }

@@ -5,7 +5,6 @@ public class Calculator {
     private String display = "";
     private String currentNumber = "";
     private int accumulator = 0;
-//    private int latestOperand = 0;
     private String latestOperator;
     private boolean resetDisplay = false;
     private boolean expectingOperand = true;
@@ -15,14 +14,15 @@ public class Calculator {
             reset();
         } else if(s.equals("+") || s.equals("-")) {
             if(!"".equals(this.currentNumber) && !this.expectingOperand) {
-                this.accumulator = accumulate(latestOperator);
+                this.accumulator = accumulate(Integer.valueOf(this.currentNumber), latestOperator);
             }
 
             resetDisplay = true;
             this.latestOperator = s;
             this.expectingOperand = true;
         } else if(s.equals("=")) {
-            this.accumulator = accumulate(latestOperator);
+            int latestOperand = Integer.valueOf((this.currentNumber.equals("") ? "0" : this.currentNumber));
+            this.accumulator = accumulate(latestOperand, latestOperator);
             this.display = String.valueOf(this.accumulator);
         } else {
             if(resetDisplay) {
@@ -40,8 +40,7 @@ public class Calculator {
         this.resetDisplay = false;
     }
 
-    private int accumulate(String operator) {
-        int latestOperand = Integer.valueOf((this.currentNumber.equals("") ? "0" : this.currentNumber));
+    private int accumulate(int latestOperand, String operator) {
         if(operator == null) return latestOperand;
         return (operator.equals("+")) ? this.accumulator + latestOperand : this.accumulator - latestOperand;
     }
