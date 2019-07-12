@@ -206,4 +206,13 @@ public class CalculatorTest {
 
         assertThat(unit.display(), is("3"));
     }
+
+    @Test
+    public void pressXForMultiplication() {
+        Calculator unit = new Calculator();
+
+        unit.press("4").press("x").press("5").press("x").press("6").press("=");
+
+        assertThat(unit.display(), is("120"));
+    }
 }

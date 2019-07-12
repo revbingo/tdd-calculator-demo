@@ -12,7 +12,7 @@ public class Calculator {
     public Calculator press(String s) {
         if(s.equals("C")) {
             reset();
-        } else if(s.equals("+") || s.equals("-")) {
+        } else if(s.equals("+") || s.equals("-") || s.equals("x")) {
             if(!"".equals(this.currentNumber) && !this.expectingOperand) {
                 this.accumulator = accumulate(Integer.valueOf(this.currentNumber), latestOperator);
             }
@@ -43,7 +43,7 @@ public class Calculator {
 
     private int accumulate(int latestOperand, String operator) {
         if(operator == null) return latestOperand;
-        return (operator.equals("+")) ? this.accumulator + latestOperand : this.accumulator - latestOperand;
+        return (operator.equals("+")) ? this.accumulator + latestOperand : (operator.equals("-") ? this.accumulator - latestOperand : this.accumulator * latestOperand);
     }
 
     public String display() {
