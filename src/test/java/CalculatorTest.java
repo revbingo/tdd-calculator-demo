@@ -215,4 +215,13 @@ public class CalculatorTest {
 
         assertThat(unit.display(), is("120"));
     }
+
+    @Test
+    public void pressSlashForDivide() {
+        Calculator unit = new Calculator();
+
+        unit.press("6").press("/").press("3").press("=");
+
+        assertThat(unit.display(), is("2"));
+    }
 }

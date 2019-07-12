@@ -9,10 +9,12 @@ public class Calculator {
     private boolean resetDisplay = false;
     private boolean expectingOperand = true;
 
+    private String operators = "+-x/";
+
     public Calculator press(String s) {
         if(s.equals("C")) {
             reset();
-        } else if(s.equals("+") || s.equals("-") || s.equals("x")) {
+        } else if(operators.contains(s)) {
             if(!"".equals(this.currentNumber) && !this.expectingOperand) {
                 this.accumulator = accumulate(Integer.valueOf(this.currentNumber), latestOperator);
             }
@@ -43,7 +45,18 @@ public class Calculator {
 
     private int accumulate(int latestOperand, String operator) {
         if(operator == null) return latestOperand;
-        return (operator.equals("+")) ? this.accumulator + latestOperand : (operator.equals("-") ? this.accumulator - latestOperand : this.accumulator * latestOperand);
+        switch(operator) {
+            case "+":
+                return this.accumulator + latestOperand;
+            case "-":
+                return this.accumulator - latestOperand;
+            case "x":
+                return this.accumulator * latestOperand;
+            case "/":
+                return this.accumulator / latestOperand;
+            default:
+                return this.accumulator;
+        }
     }
 
     public String display() {
