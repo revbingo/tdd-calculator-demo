@@ -6,9 +6,7 @@ public class Calculator {
     private String currentNumber = "";
     private int accumulator = 0;
     private String latestOperator;
-    private boolean expectingOperand = true;
-
-    private static final String OPERATORS = "+-x/";
+    private boolean expectingOperand = false;
 
     private enum KeyType {
         CLEAR,
@@ -44,9 +42,8 @@ public class Calculator {
                     this.accumulator = accumulate(Integer.valueOf(this.currentNumber), latestOperator);
                 }
 
-                this.display.stageReset();
-                this.latestOperator = key;
                 this.expectingOperand = true;
+                this.latestOperator = key;
                 break;
 
             case EQUALS:
@@ -56,8 +53,8 @@ public class Calculator {
                 break;
 
             case NUMBER:
-                this.expectingOperand = false;
-                if(display.getResetStaged()) {
+                if(this.expectingOperand) {
+                    this.expectingOperand = false;
                     reset();
                 }
                 this.currentNumber += key;
@@ -94,15 +91,6 @@ public class Calculator {
 
     public static class Display {
         private String display = "0";
-        private boolean resetDisplay = false;
-
-        public void stageReset() {
-            this.resetDisplay = true;
-        }
-
-        public boolean getResetStaged() {
-            return this.resetDisplay;
-        }
 
         public String getDisplay() {
             return this.display;
@@ -114,7 +102,6 @@ public class Calculator {
 
         public void reset() {
             this.setDisplay("0");
-            this.resetDisplay = false;
         }
     }
 }
