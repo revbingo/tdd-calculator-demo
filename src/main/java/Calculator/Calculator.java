@@ -14,12 +14,27 @@ public class Calculator {
         CLEAR,
         OPERATOR,
         EQUALS,
-        NUMBER
+        NUMBER;
 
+        public static KeyType forInput(String input) {
+            switch(input) {
+                case "C":
+                    return KeyType.CLEAR;
+                case "+":
+                case "-":
+                case "x":
+                case "/":
+                    return KeyType.OPERATOR;
+                case "=":
+                    return KeyType.EQUALS;
+                default:
+                    return KeyType.NUMBER;
+            }
+        }
     }
 
     public Calculator press(String key) {
-        switch(getKeyType(key)) {
+        switch(KeyType.forInput(key)) {
             case CLEAR:
                 reset();
                 break;
@@ -41,31 +56,15 @@ public class Calculator {
                 break;
 
             case NUMBER:
+                this.expectingOperand = false;
                 if(display.getResetStaged()) {
                     reset();
                 }
                 this.currentNumber += key;
-                this.expectingOperand = false;
                 this.display.setDisplay(this.currentNumber);
         }
 
         return this;
-    }
-
-    private KeyType getKeyType(String s) {
-        switch(s) {
-            case "C":
-                return KeyType.CLEAR;
-            case "+":
-            case "-":
-            case "x":
-            case "/":
-                return KeyType.OPERATOR;
-            case "=":
-                return KeyType.EQUALS;
-            default:
-                return KeyType.NUMBER;
-        }
     }
 
     private void reset() {
