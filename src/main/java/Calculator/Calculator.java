@@ -54,7 +54,6 @@ public class Calculator {
 
             case NUMBER:
                 if(this.expectingOperand) {
-                    this.expectingOperand = false;
                     reset();
                 }
                 this.currentNumber += key;
@@ -66,6 +65,7 @@ public class Calculator {
 
     private void reset() {
         this.display.reset();
+        this.expectingOperand = false;
         this.currentNumber = "";
     }
 
