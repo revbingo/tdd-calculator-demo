@@ -7,6 +7,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class CalculatorTest {
 
     @Test
+    public void displaysShowsZeroByDefault() {
+        Calculator unit = new Calculator();
+
+        assertThat(unit.display(), is("0"));
+    }
+
+    @Test
     public void pressingANumberDisplaysTheNumberOnScreen() {
         Calculator unit = new Calculator();
 
@@ -34,7 +41,7 @@ public class CalculatorTest {
         assertThat(unit.display(), is("345"));
 
         unit.press("C");
-        assertThat(unit.display(), is(""));
+        assertThat(unit.display(), is("0"));
     }
 
     /*
@@ -224,4 +231,5 @@ public class CalculatorTest {
 
         assertThat(unit.display(), is("2"));
     }
+
 }

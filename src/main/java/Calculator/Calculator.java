@@ -2,11 +2,12 @@ package Calculator;
 
 public class Calculator {
 
-    private String display = "";
+    private String display = "0";
+    private boolean resetDisplay = false;
+
     private String currentNumber = "";
     private int accumulator = 0;
     private String latestOperator;
-    private boolean resetDisplay = false;
     private boolean expectingOperand = true;
 
     private static final String OPERATORS = "+-x/";
@@ -73,7 +74,7 @@ public class Calculator {
     }
 
     private void reset() {
-        this.display = "";
+        this.display = "0";
         this.currentNumber = "";
         this.resetDisplay = false;
     }
