@@ -2,9 +2,7 @@ package Calculator;
 
 public class Calculator {
 
-    private String display = "0";
-    private boolean resetDisplay = false;
-
+    private Display display = new Display();
     private String currentNumber = "";
     private int accumulator = 0;
     private String latestOperator;
@@ -17,6 +15,7 @@ public class Calculator {
         OPERATOR,
         EQUALS,
         NUMBER
+
     }
 
     public Calculator press(String key) {
@@ -30,7 +29,7 @@ public class Calculator {
                     this.accumulator = accumulate(Integer.valueOf(this.currentNumber), latestOperator);
                 }
 
-                resetDisplay = true;
+                this.display.stageReset();
                 this.latestOperator = key;
                 this.expectingOperand = true;
                 break;
@@ -38,16 +37,16 @@ public class Calculator {
             case EQUALS:
                 int latestOperand = Integer.valueOf((this.currentNumber.equals("") ? "0" : this.currentNumber));
                 this.accumulator = accumulate(latestOperand, latestOperator);
-                this.display = String.valueOf(this.accumulator);
+                this.display.setDisplay(String.valueOf(this.accumulator));
                 break;
 
             case NUMBER:
-                if(resetDisplay) {
+                if(display.getResetStaged()) {
                     reset();
                 }
                 this.currentNumber += key;
                 this.expectingOperand = false;
-                this.display = this.currentNumber;
+                this.display.setDisplay(this.currentNumber);
         }
 
         return this;
@@ -69,14 +68,9 @@ public class Calculator {
         }
     }
 
-    private boolean isOperator(String s) {
-        return OPERATORS.contains(s);
-    }
-
     private void reset() {
-        this.display = "0";
+        this.display.reset();
         this.currentNumber = "";
-        this.resetDisplay = false;
     }
 
     private int accumulate(int latestOperand, String operator) {
@@ -96,6 +90,32 @@ public class Calculator {
     }
 
     public String display() {
-        return this.display;
+        return this.display.getDisplay();
+    }
+
+    public static class Display {
+        private String display = "0";
+        private boolean resetDisplay = false;
+
+        public void stageReset() {
+            this.resetDisplay = true;
+        }
+
+        public boolean getResetStaged() {
+            return this.resetDisplay;
+        }
+
+        public String getDisplay() {
+            return this.display;
+        }
+
+        public void setDisplay(String number) {
+            this.display = number;
+        }
+
+        public void reset() {
+            this.setDisplay("0");
+            this.resetDisplay = false;
+        }
     }
 }
