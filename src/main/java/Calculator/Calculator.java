@@ -8,29 +8,6 @@ public class Calculator {
     private String latestOperator;
     private boolean expectingOperand = false;
 
-    private enum KeyType {
-        CLEAR,
-        OPERATOR,
-        EQUALS,
-        NUMBER;
-
-        public static KeyType forInput(String input) {
-            switch(input) {
-                case "C":
-                    return KeyType.CLEAR;
-                case "+":
-                case "-":
-                case "x":
-                case "/":
-                    return KeyType.OPERATOR;
-                case "=":
-                    return KeyType.EQUALS;
-                default:
-                    return KeyType.NUMBER;
-            }
-        }
-    }
-
     public Calculator press(String key) {
         switch(KeyType.forInput(key)) {
             case CLEAR:
@@ -58,6 +35,9 @@ public class Calculator {
                 }
                 this.currentNumber += key;
                 this.display.setDisplay(this.currentNumber);
+
+            case INVALID:
+                break;
         }
 
         return this;

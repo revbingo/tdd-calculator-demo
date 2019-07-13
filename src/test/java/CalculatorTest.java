@@ -37,7 +37,7 @@ public class CalculatorTest {
 
         // Note that I'll assert the display is *not* clear first, to verify that it really
         // is the "C" button that clears the display (as opposed to the display always showing empty, for example)
-        unit.press("345");
+        unit.press("3").press("4").press("5");
         assertThat(unit.display(), is("345"));
 
         unit.press("C");
@@ -54,7 +54,7 @@ public class CalculatorTest {
     public void pressingThePlusButtonDoesNotChangeTheDisplay() {
         Calculator unit = new Calculator();
 
-        unit.press("345");
+        unit.press("3").press("4").press("5");
         assertThat(unit.display(), is("345"));
 
         unit.press("+");
