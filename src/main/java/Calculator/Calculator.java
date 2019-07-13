@@ -15,8 +15,8 @@ public class Calculator {
                 break;
 
             case OPERATOR:
-                if(!"".equals(this.currentNumber) && !this.expectingOperand) {
-                    this.accumulator = accumulate(Integer.valueOf(this.currentNumber), latestOperator);
+                if(!this.expectingOperand) {
+                    this.accumulator = accumulate(getOperand(), latestOperator);
                 }
 
                 this.expectingOperand = true;
@@ -24,8 +24,7 @@ public class Calculator {
                 break;
 
             case EQUALS:
-                int latestOperand = Integer.valueOf((this.currentNumber.equals("") ? "0" : this.currentNumber));
-                this.accumulator = accumulate(latestOperand, latestOperator);
+                this.accumulator = accumulate(getOperand(), latestOperator);
                 this.display.setDisplay(String.valueOf(this.accumulator));
                 break;
 
@@ -35,12 +34,17 @@ public class Calculator {
                 }
                 this.currentNumber += key;
                 this.display.setDisplay(this.currentNumber);
+                break;
 
             case INVALID:
                 break;
         }
 
         return this;
+    }
+
+    private int getOperand() {
+        return Integer.valueOf((this.currentNumber.equals("") ? "0" : this.currentNumber));
     }
 
     private void reset() {
