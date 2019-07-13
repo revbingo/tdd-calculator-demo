@@ -9,32 +9,67 @@ public class Calculator {
     private boolean resetDisplay = false;
     private boolean expectingOperand = true;
 
-    private String operators = "+-x/";
+    private static final String OPERATORS = "+-x/";
 
-    public Calculator press(String s) {
-        if(s.equals("C")) {
-            reset();
-        } else if(operators.contains(s)) {
-            if(!"".equals(this.currentNumber) && !this.expectingOperand) {
-                this.accumulator = accumulate(Integer.valueOf(this.currentNumber), latestOperator);
-            }
+    private enum KeyType {
+        CLEAR,
+        OPERATOR,
+        EQUALS,
+        NUMBER
+    }
 
-            resetDisplay = true;
-            this.latestOperator = s;
-            this.expectingOperand = true;
-        } else if(s.equals("=")) {
-            int latestOperand = Integer.valueOf((this.currentNumber.equals("") ? "0" : this.currentNumber));
-            this.accumulator = accumulate(latestOperand, latestOperator);
-            this.display = String.valueOf(this.accumulator);
-        } else {
-            if(resetDisplay) {
+    public Calculator press(String key) {
+        switch(getKeyType(key)) {
+            case CLEAR:
                 reset();
-            }
-            this.currentNumber += s;
-            this.expectingOperand = false;
-            this.display = this.currentNumber;
+                break;
+
+            case OPERATOR:
+                if(!"".equals(this.currentNumber) && !this.expectingOperand) {
+                    this.accumulator = accumulate(Integer.valueOf(this.currentNumber), latestOperator);
+                }
+
+                resetDisplay = true;
+                this.latestOperator = key;
+                this.expectingOperand = true;
+                break;
+
+            case EQUALS:
+                int latestOperand = Integer.valueOf((this.currentNumber.equals("") ? "0" : this.currentNumber));
+                this.accumulator = accumulate(latestOperand, latestOperator);
+                this.display = String.valueOf(this.accumulator);
+                break;
+
+            case NUMBER:
+                if(resetDisplay) {
+                    reset();
+                }
+                this.currentNumber += key;
+                this.expectingOperand = false;
+                this.display = this.currentNumber;
         }
+
         return this;
+    }
+
+    private KeyType getKeyType(String s) {
+        switch(s) {
+            case "C":
+                return KeyType.CLEAR;
+            case "+":
+            case "-":
+            case "x":
+            case "/":
+                return KeyType.OPERATOR;
+            case "=":
+                return KeyType.EQUALS;
+            default:
+                return KeyType.NUMBER;
+        }
+    }
+
+    private boolean isOperator(String s) {
+        return OPERATORS.contains(s);
     }
 
     private void reset() {
