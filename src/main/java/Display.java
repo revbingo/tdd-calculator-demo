@@ -1,5 +1,3 @@
-package Calculator;
-
 public class Display {
     private String display = "0";
 

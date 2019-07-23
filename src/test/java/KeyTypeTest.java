@@ -1,4 +1,3 @@
-import Calculator.KeyType;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;

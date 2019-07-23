@@ -1,5 +1,3 @@
-package Calculator;
-
 public enum KeyType {
     CLEAR,
     OPERATOR,

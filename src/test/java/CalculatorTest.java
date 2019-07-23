@@ -1,4 +1,3 @@
-import Calculator.Calculator;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -149,7 +148,7 @@ public class CalculatorTest {
         I expected the display to show "4", and expected this test to pass. It didn't, it showed "8". I debugged, and
         found that this was because when I pressed equals, it took the content of the display as being the second
         operand, and because pressing plus doesn't immediately clear the display, it was still "4",
-        so it did 4 + 4. This got me thinking about what the behaviour ought to be.  I tried it on the Mac Calculator.Calculator.app,
+        so it did 4 + 4. This got me thinking about what the behaviour ought to be.  I tried it on the Mac Calculator.app,
         and it shows exactly the same behaviour.  Pressing 4, +, = gives an answer of 8
      */
     @Test
@@ -162,7 +161,7 @@ public class CalculatorTest {
     }
 
     /*
-        Having discovered the above in Calculator.Calculator.app, it made me wonder "what happens if I press equals again"??.
+        Having discovered the above in Calculator.app, it made me wonder "what happens if I press equals again"??.
         Totally unexpectedly, my code, without any changes, behaves the same way.  The first operator is repeatedly
         applied to the first operator
      */

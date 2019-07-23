@@ -1,5 +1,3 @@
-package Calculator;
-
 public class Calculator {
 
     private Display display = new Display();
