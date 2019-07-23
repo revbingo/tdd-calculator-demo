@@ -19,6 +19,7 @@ code.  Do they pass as you expect?  Try them on a normal calculator and see if y
 If you want to try things for yourself, there's a few other features you could add:
 
 * The current code only deals with integers.  Can you make it work with decimals?
+* Implement a `+/-` button for entering negative numbers
 * Implement `M`, `M+` and `M-` for memory features
 * The C button only clears the last number entered.  Implement an `AC` button to clear the whole calculation.
 * Write a simple command line UI for pressing buttons
