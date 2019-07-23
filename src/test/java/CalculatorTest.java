@@ -43,12 +43,23 @@ public class CalculatorTest {
         assertThat(unit.display(), is("0"));
     }
 
+    @Test
+    public void clearOnlyClearsTheCurrentNumber() {
+        Calculator unit = new Calculator();
+
+        unit.press("3").press("+").press("5").press("6").press("C").press("4");
+        assertThat(unit.display(), is("4"));
+
+        unit.press("=");
+        assertThat(unit.display(), is("7"));
+    }
+
     /*
-        I started to write the test useThePlusButtonToAddTwoNumbersTogether, but it was forcing me to implement
-        both the plus and equals at the same time, which felt like too much functionality to do in one go.  This
-        test is a simple one to force me to at least treat + as a special case before I implement the addition
-        behaviour
-     */
+            I started to write the test useThePlusButtonToAddTwoNumbersTogether, but it was forcing me to implement
+            both the plus and equals at the same time, which felt like too much functionality to do in one go.  This
+            test is a simple one to force me to at least treat + as a special case before I implement the addition
+            behaviour
+         */
     @Test
     public void pressingThePlusButtonDoesNotChangeTheDisplay() {
         Calculator unit = new Calculator();
